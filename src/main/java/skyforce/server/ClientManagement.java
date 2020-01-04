@@ -169,6 +169,9 @@ public class ClientManagement implements ISession {
     public User getUser() {
         return user;
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void hansakeMessage() throws IOException {
         System.out.println("hansakeMessage");

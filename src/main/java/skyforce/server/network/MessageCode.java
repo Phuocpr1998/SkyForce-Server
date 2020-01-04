@@ -8,4 +8,5 @@ public class MessageCode {
     public static final byte PLAYER_JOIN_AREROOM_CODE = 4;
     public static final byte GET_PLAYER_IN_ROOM = 5;
     public static final byte PLAYER_LEFT_AREROOM_CODE = 6;
+    public static final byte REGISTER_PLAYER = 7;
 }

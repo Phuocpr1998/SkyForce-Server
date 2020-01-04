@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ServerManagement {
     private static int port = 1234;
-    public static int maxUserInRoom = 10;
+    public static int maxUserInRoom = 2;
 
     private ServerSocket serverSocket;
     private List<RoomAreaManagement> roomAreaManagements;
@@ -42,10 +42,48 @@ public class ServerManagement {
     }
 
     public static ServerManagement getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new ServerManagement();
         }
         return instance;
+    }
+
+    public byte JoinRoom(int roomId, ClientManagement clientManagement) {
+        for (RoomAreaManagement roomAreaManagement : roomAreaManagements) {
+            if (roomAreaManagement.getRoomId() == roomId) {
+                if (!roomAreaManagement.isFully()) {
+                    clientManagement.setCurrentRoom(roomAreaManagement);
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        }
+        return 2;
+    }
+
+    public int GetRoomAlready() {
+        for (RoomAreaManagement roomAreaManagement : roomAreaManagements) {
+            if (!roomAreaManagement.isFully()) {
+                return roomAreaManagement.getRoomId();
+            }
+        }
+        return -1;
+    }
+
+    public int CreateRoom() {
+        RoomAreaManagement roomAreaManagement = new RoomAreaManagement(roomAreaManagements.size());
+        roomAreaManagements.add(roomAreaManagement);
+        return roomAreaManagement.getRoomId();
+    }
+
+    public int RegisterPlayer(String name){
+        for (ClientManagement clientManagement: clientManagements) {
+            if (clientManagement.getUser() != null && clientManagement.getUser().getName().equals(name)) {
+                return -1;
+            }
+        }
+        return clientManagements.size();
     }
 
     public static void setPort(int port) {

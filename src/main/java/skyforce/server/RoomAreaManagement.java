@@ -43,7 +43,7 @@ public class RoomAreaManagement {
     public void joinRoom(ClientManagement clientManagement) {
         System.out.println("Client join room");
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        Message ms = MessageWriter.getInstance().getMessageJoinRoomArea(gson.toJson(clientManagement.getUser()));
+        Message ms = MessageWriter.getInstance().getMessagePlayerJoinRoomArea(gson.toJson(clientManagement.getUser()));
         for (ClientManagement cl : clientManagements) {
             cl.sendMessage(ms);
         }
