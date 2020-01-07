@@ -1,12 +1,19 @@
 package skyforce.entry;
 
+import com.google.gson.annotations.Expose;
+
 public class User {
+    @Expose
     private int id;
+    @Expose
     private String name;
+    @Expose
+    private boolean ready;
 
     public User(int id, String name) {
         this.id = id;
         this.name = name;
+        this.ready = false;
     }
 
     public int getUuid() {
@@ -23,5 +30,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 }

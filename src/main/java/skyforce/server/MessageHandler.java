@@ -26,7 +26,7 @@ public class MessageHandler implements IMessageHandler {
             DataInputStream data = message.reader();
             int roomId;
             RoomAreaManagement currentRoom;
-            Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             switch (message.getCommand()) {
                 case MessageCode.HANSAKE_CODE:
                     clientManagement.hansakeMessage();
@@ -36,6 +36,7 @@ public class MessageHandler implements IMessageHandler {
                     int idUser = ServerManagement.getInstance().RegisterPlayer(name);
                     if (idUser > 0) {
                         clientManagement.setUser(new User(idUser, name));
+                        System.out.printf("User %d %s register\n", idUser, name);
                         clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte)1));
                     } else {
                         clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte)0));
@@ -51,7 +52,7 @@ public class MessageHandler implements IMessageHandler {
                     }
                     break;
                 case MessageCode.CREATE_ROOM_CODE:
-                    roomId = ServerManagement.getInstance().CreateRoom();
+                    roomId = ServerManagement.getInstance().CreateRoom(clientManagement);
                     clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseCreateRoom(roomId));
                     break;
                 case MessageCode.FIND_ROOM_CODE:

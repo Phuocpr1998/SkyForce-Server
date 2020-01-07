@@ -1,6 +1,10 @@
 package skyforce.server;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import skyforce.server.network.MessageWriter;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -71,9 +75,10 @@ public class ServerManagement {
         return -1;
     }
 
-    public int CreateRoom() {
-        RoomAreaManagement roomAreaManagement = new RoomAreaManagement(roomAreaManagements.size());
+    public int CreateRoom(ClientManagement clientManagement) {
+        RoomAreaManagement roomAreaManagement = new RoomAreaManagement(1000 + roomAreaManagements.size());
         roomAreaManagements.add(roomAreaManagement);
+        clientManagement.setCurrentRoom(roomAreaManagement);
         return roomAreaManagement.getRoomId();
     }
 

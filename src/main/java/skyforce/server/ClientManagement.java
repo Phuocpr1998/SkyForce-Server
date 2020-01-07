@@ -28,7 +28,7 @@ public class ClientManagement implements ISession {
 
     private boolean connected;
 
-    private byte[] keyHansake = "bnsoline".getBytes();
+    private byte[] keyHansake = "skyforce".getBytes();
 
     public ClientManagement(Socket socketClient) throws IOException {
         this.socketClient = socketClient;

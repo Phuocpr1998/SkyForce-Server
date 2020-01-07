@@ -28,6 +28,7 @@ public class MessageWriter {
 
     public Message getMessageGetPlayerRoomArea(String info) {
         Message ms = new Message(MessageCode.GET_PLAYER_IN_ROOM);
+        System.out.println("UserInfo " + info);
         try {
             DataOutputStream ds = ms.writer();
             ds.writeShort(info.length());
@@ -41,6 +42,7 @@ public class MessageWriter {
 
     public Message getMessagePlayerJoinRoomArea(String info) {
         Message ms = new Message(MessageCode.PLAYER_JOIN_AREROOM_CODE);
+        System.out.println("UserInfo " + info);
         try {
             DataOutputStream ds = ms.writer();
             ds.writeShort(info.length());
