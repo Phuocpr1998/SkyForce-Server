@@ -93,11 +93,14 @@ public class MessageWriter {
         return ms;
     }
 
-    public Message getMessageResponseRegisterPlayer(byte status) {
+    public Message getMessageResponseRegisterPlayer(byte status, int idUser) {
         Message ms = new Message(MessageCode.REGISTER_PLAYER);
         try {
             DataOutputStream ds = ms.writer();
             ds.writeByte(status);
+            if (status == 1) {
+                ds.writeShort(idUser);
+            }
             ds.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
