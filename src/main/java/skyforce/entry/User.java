@@ -10,10 +10,13 @@ public class User {
     @Expose
     private boolean ready;
 
+    public static int UserCount = 0;
+
     public User(int id, String name) {
         this.id = id;
         this.name = name;
         this.ready = false;
+        UserCount++;
     }
 
     public int getUuid() {

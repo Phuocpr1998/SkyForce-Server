@@ -33,8 +33,8 @@ public class MessageHandler implements IMessageHandler {
                     break;
                 case MessageCode.REGISTER_PLAYER:
                     String name = data.readUTF().trim();
-                    int idUser = ServerManagement.getInstance().RegisterPlayer(name);
-                    if (idUser > 0) {
+                    int idUser = User.UserCount;
+                    if (ServerManagement.getInstance().RegisterPlayer(name)) {
                         clientManagement.setUser(new User(idUser, name));
                         System.out.printf("User %d %s register\n", idUser, name);
                         clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte)1));
@@ -88,6 +88,7 @@ public class MessageHandler implements IMessageHandler {
     public void onDisconnected() {
         System.out.println("Client disconnected");
         clientManagement.getCurrentRoom().leftRoom(clientManagement);
+        ServerManagement.getInstance().RemoveClient(clientManagement);
     }
 
     @Override

@@ -82,17 +82,25 @@ public class ServerManagement {
         return roomAreaManagement.getRoomId();
     }
 
-    public int RegisterPlayer(String name){
+    public boolean RegisterPlayer(String name){
         for (ClientManagement clientManagement: clientManagements) {
             if (clientManagement.getUser() != null && clientManagement.getUser().getName().equals(name)) {
-                return -1;
+                return false;
             }
         }
-        return clientManagements.size();
+        return true;
     }
 
     public static void setPort(int port) {
         ServerManagement.port = port;
+    }
+
+    public void RemoveRoom(RoomAreaManagement roomAreaManagement) {
+        roomAreaManagements.remove(roomAreaManagement);
+    }
+
+    public void RemoveClient(ClientManagement clientManagement) {
+        clientManagements.remove(clientManagement);
     }
 
 }

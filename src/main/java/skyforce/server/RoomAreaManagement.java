@@ -34,20 +34,25 @@ public class RoomAreaManagement {
     public void leftRoom(ClientManagement clientManagement) {
         System.out.println("Client left room");
         clientManagements.remove(clientManagement);
-        Message ms = MessageWriter.getInstance().getMessageLeftRoomArea();
-        for (ClientManagement cl : clientManagements) {
-            cl.sendMessage(ms);
+        if (clientManagements.size() == 0) {
+            ServerManagement.getInstance().RemoveRoom(this);
+        } else {
+            Message ms = MessageWriter.getInstance().getMessageLeftRoomArea();
+            for (ClientManagement cl : clientManagements) {
+                cl.sendMessage(ms);
+            }
         }
     }
 
     public void joinRoom(ClientManagement clientManagement) {
         System.out.println("Client join room");
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        clientManagements.add(clientManagement);
         Message ms = MessageWriter.getInstance().getMessagePlayerJoinRoomArea(gson.toJson(clientManagement.getUser()));
         for (ClientManagement cl : clientManagements) {
-            cl.sendMessage(ms);
+            if (cl.getUser().getUuid() != clientManagement.getUser().getUuid())
+                cl.sendMessage(ms);
         }
-        clientManagements.add(clientManagement);
     }
 
     public void notifyAllClient(User userChange, Message message) {
