@@ -68,8 +68,13 @@ public class MessageHandler implements IMessageHandler {
                     for (ClientManagement cl : currentRoom.getClientManagements()) {
                         if (cl.getUser().getUuid() != clientManagement.getUser().getUuid()) {
                             Message msg = new Message(message.getCommand());
-                            msg.writer().write(data.readAllBytes());
-                            cl.sendMessage(msg);
+                            try {
+                                while (true) {
+                                    msg.writer().write(data.readByte());
+                                }
+                            } catch (Exception ex) {
+                                cl.sendMessage(msg);
+                            }
                         }
                     }
                     break;

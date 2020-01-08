@@ -44,7 +44,6 @@ public class Message {
 
     public DataInputStream reader() {
         return dis;
-
     }
 
     public DataOutputStream writer() {
