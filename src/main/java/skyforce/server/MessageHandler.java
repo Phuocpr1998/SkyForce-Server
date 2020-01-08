@@ -37,9 +37,9 @@ public class MessageHandler implements IMessageHandler {
                     if (ServerManagement.getInstance().RegisterPlayer(name)) {
                         clientManagement.setUser(new User(idUser, name));
                         System.out.printf("User %d %s register\n", idUser, name);
-                        clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte)1, idUser));
+                        clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte) 1, idUser));
                     } else {
-                        clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte)0, 0));
+                        clientManagement.sendMessage(MessageWriter.getInstance().getMessageResponseRegisterPlayer((byte) 0, 0));
                     }
                     break;
                 case MessageCode.GET_PLAYER_IN_ROOM:
@@ -67,7 +67,9 @@ public class MessageHandler implements IMessageHandler {
                     currentRoom = clientManagement.getCurrentRoom();
                     for (ClientManagement cl : currentRoom.getClientManagements()) {
                         if (cl.getUser().getUuid() != clientManagement.getUser().getUuid()) {
-                            cl.sendMessage(message);
+                            Message msg = new Message(message.getCommand());
+                            msg.writer().write(data.readAllBytes());
+                            cl.sendMessage(msg);
                         }
                     }
                     break;
@@ -87,7 +89,9 @@ public class MessageHandler implements IMessageHandler {
     @Override
     public void onDisconnected() {
         System.out.println("Client disconnected");
-        clientManagement.getCurrentRoom().leftRoom(clientManagement);
+        if (clientManagement.getCurrentRoom() != null) {
+            clientManagement.getCurrentRoom().leftRoom(clientManagement);
+        }
         ServerManagement.getInstance().RemoveClient(clientManagement);
     }
 
