@@ -21,7 +21,6 @@ public class MessageHandler implements IMessageHandler {
 
     @Override
     public void onMessage(Message message) {
-        System.out.printf("Get message %d\n", message.getCommand());
         try {
             DataInputStream data = message.reader();
             int roomId;
