@@ -158,8 +158,10 @@ public class ClientManagement implements ISession {
                 } else {
                     dataOutputStream.writeByte(0);
                 }
-                dataOutputStream.flush();
+            } else {
+                dataOutputStream.writeByte(0);
             }
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
